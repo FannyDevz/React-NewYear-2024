@@ -17,16 +17,27 @@ function App() {
     const gapDate = newYearDate - nowDate;
     return gapDate;
   }
-
+    const renderer = ({ days, hours, minutes, seconds, completed }) => {
+        if (completed) {
+            return <span>Happy New Year 2024!</span>;
+        } else {
+            return (
+                <span>
+          {days} Days {hours} Hours {minutes} Minutes {seconds} Seconds
+        </span>
+            );
+        }
+    };
   return (
     <>
      <Particles init={particlesInit} options={{ preset: "fireworks"}}>
      </Particles>
      <div className="flex flex-col items-center justify-center min-h-screen gap-4 ">
       <span className="text-5xl font-bold text-white z-50 px-4 text-center"><Typewriter loop={true} cursor={true} cursorColor="white" words={newYear}/></span>
-      <div className="z-50 text-white font-bold text-3xl text-center ">
-        <Countdown date={Date.now() + countdown()} onComplete={() => setNewYear(["Happy","New","Year","2024"])}/>
-      </div>
+         <div className="z-50 text-white font-bold text-lg md:text-2xl lg:text-2xl text-center ">
+             {/* Pass the custom renderer to Countdown component */}
+             <Countdown date={Date.now() + countdown()} renderer={renderer} onComplete={() => setNewYear(["Happy", "New", "Year", "2024"])}/>
+         </div>
       </div>
     </>
   );
